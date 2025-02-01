@@ -13,9 +13,9 @@ public class DataController {
     @Autowired
     private DailyTotalsServiceInterface dailyTotalsServiceInterface;
 
-    @GetMapping
+    @GetMapping("/dailyTotals")
     public ResponseEntity<?> getDailyData(){
-        return ResponseEntity.ok("test");
+        return ResponseEntity.ok(dailyTotalsServiceInterface.getDailyTotals());
     }
     
 }

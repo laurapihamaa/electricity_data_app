@@ -1,70 +1,76 @@
 package electricity.data.backend.v1.entities;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.annotation.Id;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@EntityScan
+@Entity
 @Table(name="electricitydata")
 public class ElectricityData {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
     @Column(name="date")
-    private String date;
+    private LocalDate date;
 
     @Column(name="starttime")
-    private String start_time;
+    private LocalDateTime start_time;
 
     @Column(name="consumptionamount")
-    private double consumption;
+    private BigDecimal consumption;
 
     @Column(name="productionamount")
-    private double production;
+    private BigDecimal production;
 
     @Column(name="hourlyprice")
-    private double averagePrice;
+    private BigDecimal averagePrice;
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public double getConsumption() {
+    public BigDecimal getConsumption() {
         return consumption;
     }
 
-    public void setConsumption(double consumption) {
+    public void setConsumption(BigDecimal consumption) {
         this.consumption = consumption;
     }
 
-    public double getProduction() {
+    public BigDecimal getProduction() {
         return production;
     }
 
-    public void setProduction(double production) {
+    public void setProduction(BigDecimal production) {
         this.production = production;
     }
 
-    public double getAveragePrice() {
+    public BigDecimal getAveragePrice() {
         return averagePrice;
     }
 
-    public void setAveragePrice(double averagePrice) {
+    public void setAveragePrice(BigDecimal averagePrice) {
         this.averagePrice = averagePrice;
     }
 
-    public String getStart_time() {
+    public LocalDateTime getStart_time() {
         return start_time;
     }
 
-    public void setStart_time(String start_time) {
+    public void setStart_time(LocalDateTime start_time) {
         this.start_time = start_time;
     }
 
