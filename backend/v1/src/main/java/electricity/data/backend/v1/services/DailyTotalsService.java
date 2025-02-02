@@ -3,11 +3,17 @@ package electricity.data.backend.v1.services;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import electricity.data.backend.v1.entities.DailyTotals;
@@ -22,19 +28,31 @@ public class DailyTotalsService implements DailyTotalsServiceInterface{
     private ElectricityDataRepository electricityDataRepository;
 
     @Override
-    public List<DailyTotals> getDailyTotals(){
+    public Page<DailyTotals> getDailyTotals(int page, int size, String sortBy, String sortOrder, String search){
+
+            System.out.println(sortBy + sortOrder);
+
+            Sort sort = "desc".equalsIgnoreCase(sortOrder) ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+
+            Pageable pageable = PageRequest.of(page-1, size, sort);
+
+            Page<DailyTotals> dailyTotals = new PageImpl<>(Collections.emptyList(), pageable, 0);
             
             //retrieve daily totals
-            List<DailyTotals> dailyTotals = electricityDataRepository.findDailyTotals();
+            if (search==null || search.isEmpty()){
+                dailyTotals = electricityDataRepository.findDailyTotals(pageable);
+            } else{
+                dailyTotals = electricityDataRepository.findDailyTotalsSearchQuery(search, pageable);
+            }
 
             //retrieve the negative time period
             Map<Date, Long> negativePricePeriods = findConcecutiveHours(electricityDataRepository.findNegtaivePricePeriod());
 
             //add into daily totals
-            dailyTotals=combineTotalsAndNegatives(dailyTotals, negativePricePeriods);
+            List<DailyTotals> listDailyTotals=combineTotalsAndNegatives(dailyTotals.getContent(), negativePricePeriods);
             
             //return
-            return dailyTotals;
+            return new PageImpl<>(listDailyTotals, pageable, dailyTotals.getTotalElements());
     }
 
     private Map<Date, Long> findConcecutiveHours (List<NegativeHours> negativePricePeriods){
