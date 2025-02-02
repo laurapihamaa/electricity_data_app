@@ -1,9 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
+import './styles/App.css';
 import Table from './components/Table';
 import { useEffect, useState } from 'react';
 import SearchBar from './components/SearchBar';
 import Chart from './components/Chart';
+import Button from './components/Button';
 
 function App() {
 
@@ -45,13 +45,13 @@ function App() {
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
       <Table data={dailyToatals} onSortClick={handleSorting}/>
       <div>
-        <button onClick={() => setPage(page-1)} disabled={page===1}>
-          Previous
-        </button>
-        <span> Page {page} of {allPages} </span>
-        <button onClick={() => setPage(page+1)} disabled={page===allPages}>
-          Next
-        </button>
+      <Button direction="Previous" 
+              onClick={()=>setPage(page-1)}
+              disabled={page==1}/>
+      <span> Page {page} of {allPages} </span>
+      <Button direction="Next" 
+              onClick={() => setPage(page+1)} 
+              disabled={page===allPages}/>
       </div>
       <Chart data={dailyToatals}/>
     </div>

@@ -1,0 +1,27 @@
+/* Button.css */
+
+.Button {
+    display: inline-block; /* Make sure the button stays inline with other elements */
+    margin: 5px 10px; /* Add some spacing around the button */
+  }
+  
+  button {
+    background-color: #5c8f5c; /* Green background */
+    color: white; /* White text */
+    font-size: 14px;
+    padding: 10px 20px; /* Padding for the button size */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+  }
+  
+  button:hover:not(:disabled) {
+    background-color: #1e3d20; /* Darker green when hovered */
+    transform: translateY(-2px); /* Slight lift effect */
+  }
+  
+  button:disabled {
+    background-color: #ccc; /* Gray background when disabled */
+    cursor: not-allowed; /* Prevent pointer cursor */
+    transform: none; /* Remove hover effect when disabled */
+  }
+  

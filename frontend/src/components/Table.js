@@ -1,14 +1,15 @@
 import React from "react";
+import '../styles/Table.css';
 
 function Table({data, onSortClick}){
     return(
-        <div>
+        <div className="Table">
             <table>
                 <thead>
                     <tr>
                         <th onClick={() => onSortClick('date')}>Date ↑↓</th>
-                        <th onClick={() => onSortClick('consumptionamount')}>Daily consumpiton in total ↑↓</th>
-                        <th onClick={() => onSortClick('productionamount')}>Daily Production in total ↑↓</th>
+                        <th onClick={() => onSortClick('consumptionamount')}>Daily Production in total ↑↓</th>
+                        <th onClick={() => onSortClick('productionamount')}>Daily Consumption in total ↑↓</th>
                         <th onClick={() => onSortClick('hourlyprice')}>Daily price (average) ↑↓</th>
                         <th>Longest concecutive negative hours</th>
                     </tr>

@@ -1,8 +1,9 @@
 import React from "react";
+import "../styles/Searchbar.css"
 
 function SearchBar({searchQuery, setSearchQuery}){
     return(
-        <div>
+        <div className="Searchbar">
             <form>
                 <input
                     value={searchQuery}
