@@ -11,6 +11,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/*
+ * 
+ * object representing the table entities
+ * 
+ */
+
 @Entity
 @Table(name="electricitydata")
 public class ElectricityData {

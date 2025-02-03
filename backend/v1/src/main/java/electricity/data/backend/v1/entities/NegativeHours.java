@@ -3,6 +3,12 @@ package electricity.data.backend.v1.entities;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+/*
+ * 
+ * object representing the negative hours in a day
+ * 
+ */
+
 public class NegativeHours {
 
     private Timestamp dateTime;

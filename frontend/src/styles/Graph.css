@@ -3,22 +3,20 @@
     justify-content: center; /* Centers items horizontally */
     align-items: center; /* Centers items vertically */
     gap: 20px; /* Optional: Adds space between the graphs */
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    flex-wrap: wrap; 
     padding: 20px;
     width: 100%;
 }
 
 .Graph-container .graph {
-    display: flex; /* Ensures flex properties work */
-    flex-direction: column; /* Allows the graph title and chart to stack vertically */
-    justify-content: center; /* Centers the content vertically */
-    align-items: center; /* Centers the content horizontally */
-    width: 80%; /* Default width for each graph (3 charts in a row) */
-    height: 500px; /* Set a fixed height for each graph */
-    margin: 10px 0; /* Optional: Add some margin around graphs */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    width: 80%; 
+    height: 500px; 
+    margin: 10px 0; 
     padding: 10px;
-    box-sizing: border-box; /* Prevent padding from affecting width */
-    transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s ease; /* Smooth transition for hover effect */
 }
 
 

@@ -13,61 +13,45 @@ ChartJS.register(
     Legend
   );
 
-  function Chart({data}){
+  /**
+   * 
+   * A reusable component representing the charts
+   * 
+   * @param {data} map - a map containing data for the charts
+   * @param {title} string - a title for the chart
+   * @param {color} string - a line color 
+   * @param {xValues} string - xValues to pick from dataset
+   * @param {yValues} string - yValues to pick from dataset
+   * @returns {JSX.Element}
+   */
 
-    const [consumptionData, setConsumptionData]=useState(null);
-    const [productionnData, setProductionData]=useState(null);
-    const [priceData, setPriceData]=useState(null);
+  function Chart({data, title, color, xValues, yValues}){
+
+    const [dataSet, setDataSet]=useState(null);
+
+    /**
+     * a hook creating a dataset to draw the chart from
+     * triggers whenever the data changes
+     */
 
     useEffect(() => {
-        setConsumptionData({
-            labels: data.map(item => item.date),
+        setDataSet({
+            labels: data.map(item => item[xValues]),
             datasets:[
                 {
-                    label: "Daily production",
-                    data: data.map(item=>item.dailyConsumption),
-                    borderColor: 'red'
+                    label: title,
+                    data: data.map(item=>item[yValues]),
+                    borderColor: color
                 }
             ]
         });
-        setProductionData({
-            labels: data.map(item => item.date),
-            datasets:[
-                {
-                    label: "Daily consumption",
-                    data: data.map(item=>item.dailyProduction),
-                    borderColor: 'blue'
-                    
-                }
-            ]
-        });
-        setPriceData({
-            labels: data.map(item => item.date),
-            datasets:[
-                {
-                    label: "Daily price",
-                    data: data.map(item=>item.dailyPrice),
-                    borderColor: 'green'
-                }
-            ]
-        })
     }, [data])
 
     return(
-        <div className="Graph-container">
             <div className="graph">
-            <h2>Electricity Production</h2>
-            {consumptionData && <Line data={consumptionData}/>}
+            <h2>{title}</h2>
+            {dataSet && <Line data={dataSet}/>}
             </div>
-            <div className="graph">
-            <h2>Electricity Consumption</h2>
-            {productionnData && <Line data={productionnData}/>}
-            </div>
-            <div className="graph">
-            <h2>Daily price (average)</h2>
-            {priceData && <Line data={priceData}/>}
-            </div>
-        </div>
     )
   }
 

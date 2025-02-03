@@ -3,6 +3,12 @@ package electricity.data.backend.v1.entities;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+/*
+ * 
+ * Object representing the daily totals sent to the frontend
+ * 
+ */
+
 public class DailyTotals {
 
     private Date date;
