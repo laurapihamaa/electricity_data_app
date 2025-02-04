@@ -1,74 +1,50 @@
 # dev-academy-spring-2025-exercise
 
-This is the pre-assignment for Solita Dev Academy Finland January 2025. But if you’re here just purely out of curiosity, feel free to snatch the idea and make your own app just for the fun of it!
+# Instructions for running the application
 
-Let's imagine that you have received an interesting project offer to create a UI and a backend service for displaying data from electricity production, consumption and prices. 
-The exercise uses data that is owned by Fingrid and combines that with electricity price data from porssisahko.net. 
+The application is runnable with a docker compose file
 
-# The exercise
-Create a web application that uses a backend service to fetch the data. Backend can be made with any technology. We at Solita use for example (not in preference order) Java/Kotlin/C#/TypeScript but you are free to choose any other technology as well. 
+1.  On command line under this folder run:
 
-You are provided with Docker setup, with contains a PostgreSQL database with all the necessary data for the exercise. 
+docker compose up --build
 
-You can also freely choose the frontend technologies to use. The important part is to give good instructions on how to build and run the project. 
+The application will be running at: localhost:80
 
-Please return the exercise as a link to github repository. 
+You can also run the application without docker with the following commands:
 
-# Stuff to do 
+1. Set up database (docker): 
 
-## Daily statistics list (recommended features)
-- Total electricity consumption per day 
-- Total electricity production per day 
-- Average electricity price per day 
-- Longest consecutive time in hours, when electricity price has been negative, per day 
+Run the database by running only the db and adminer from docker compose file
 
-## Additional features for daily statistics list
-- Pagination 
-- Ordering per column 
-- Searching 
-- Filtering 
+2. Run the backend application:
 
-## Other additional features
-- Single day view 
--- Total electricity consumption per day 
--- Total electricity production per day 
--- Average electricity price per day 
--- Hour with most electricity consumption compared to production 
--- Cheapest electricity hours for the day 
-- Graph visualisations 
+cd .\backend\v1
+mvn spring-boot:run
 
-## Surprise us with 
-- Running backend in Docker 
-- Running backend in Cloud 
-- Implement E2E tests 
+3. Run the frontend application:
+cd .\frontend
+npm install
+npm start 
 
-# Instructions for running the database
-1. Install Docker Desktop on your computer (https://docs.docker.com/desktop/)
-2. Clone this repository
-3. On command line under this folder run:
+The application will be running at: localhost:3000
 
-```
-docker compose up --build --renew-anon-volumes -d
-```
 
-Please note that running that might take couple of minutes
+# Some notes about the application
 
-4. Docker setup also comes with Adminer UI, where you can check your database contents at http://localhost:8088/
-5. Log into Adminer with following information (password: academy):
+# Architecture
 
-![alt text](login.png)
+The backend is designed in the MVC-typish approach. I chose this style mainly for the following reasons modularity as I could have clear separation of tasks with the controller handling the requests, services handling any business logic and the frontend is simply for displaying the contents. The question wheter the service layer was actually needed can be valid as the application is relatively small and the business logic handling could be done in the controller as well.
+I still decided to create the service layer as I felt like adding all of the business logic to the controller would have made it too complex. But I guess that this is a personal preference.
 
-Database is running at postgres://localhost:5432/electricity and the database name is electricity. Database comes with user academy (password: academy).
+# Implementation
 
-# Database structure
-Database consists of one table electricityData.
+I decided to go with the approach that most of the data querying would be performed straight through the SQL-quering which meant in my case that searching, pagination and ordering (mostly)
+was handled directly in a sql-query. The main reason behind this was the efficiency of querying the table and retrieving only necessary data. The cons with this approach was having more complexity in the
+SQL-queries and to avoid that I decied to also implement some order handling and pagination by code while ordering the longest concecutive hours. So I finally ended up with a hybrid-approach with doing the simple logic via SQL queries
+and more complex logic via code. This of course adds to some complexity as every data is not treated as the same but for me it felt like the best approach with combaining the "best of both worlds" in a way.
 
-## ElectricityData table
-| Column | Description | Type |
-| ----------- | ----------- | ----------- |
-| id | id, primary key | integer |
-| date | date of the data point | DATE |
-| startTime | Starting time of the hour for the data point | TIMESTAMP |
-| productionAmount | Electricity production for the hour MWh/h | NUMERIC(11,5) *NULL* |
-| consumptionAmount | Electricity consumption for the hour kWh | NUMERIC(11,3) *NULL* |
-| hourlyPrice | Electricity price for the hour | NUMERIC(6,3) *NULL* |
+# Testing
+
+For the backend I reached 100% test coverage for controller and 90% test coverage for services. I find it sufficient but with more time I would implement more tests.
+I decided to create some integration tests to test the functionality of sending requests to database. This uses the actual database as most of the tests were only to retrieve data and after all it is only a practice assesment.
+

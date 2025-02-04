@@ -37,6 +37,11 @@ public class DataControllerTest {
     DailyTotals dailyTotal1 = new DailyTotals(Date.valueOf("2024-09-16"), BigDecimal.valueOf(639946.64), BigDecimal.valueOf(112600901.841), BigDecimal.valueOf(22.0940000000000000));
     DailyTotals dailyTotal2 = new DailyTotals(Date.valueOf("2024-10-16"), BigDecimal.valueOf(139946.64), BigDecimal.valueOf(212600901.841), BigDecimal.valueOf(18.0940000000000000));
 
+    /*
+     * Test getting the daily totals with the default values and no search string
+     * The test should return status ok
+     */
+
     @Test
     public void testGetDailyTotals_DailyTotalsFound() throws Exception {
 
@@ -50,6 +55,11 @@ public class DataControllerTest {
         .andDo(print())
         .andExpect(status().isOk());
     }
+
+    /*
+     * Test getting daily totals with default values and no search string with expection thrown
+     * The test should return client error and an exception message
+     */
 
     @Test
     public void testGetDailyTotals_WithException() throws Exception {

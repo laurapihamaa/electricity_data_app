@@ -17,3 +17,26 @@ services:
     restart: always
     ports:
       - 8088:8080
+  # Java Backend service
+  backend:
+    build:
+      context: ./backend/v1
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/electricity
+      SPRING_DATASOURCE_USERNAME: academy
+      SPRING_DATASOURCE_PASSWORD: academy
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+  
+  # React Frontend service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

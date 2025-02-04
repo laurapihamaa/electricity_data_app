@@ -102,7 +102,7 @@ public class DailyTotalsService implements DailyTotalsServiceInterface{
      * 
      */
 
-    private Map<Date, Long> findConcecutiveHours (List<NegativeHours> negativePricePeriods){
+    protected Map<Date, Long> findConcecutiveHours (List<NegativeHours> negativePricePeriods){
 
         try{
         
@@ -138,6 +138,10 @@ public class DailyTotalsService implements DailyTotalsServiceInterface{
             }
         }
 
+        //handle the last entry
+        Date date = Date.valueOf(currentDate);
+        longestNegativePeriods.put(date, Math.max(duration, longestDuration));
+
         return longestNegativePeriods;
     
         }catch(Exception e){
@@ -157,7 +161,7 @@ public class DailyTotalsService implements DailyTotalsServiceInterface{
      * 
      */
 
-    private void combineTotalsAndNegatives (List<DailyTotals> dailyTotals, Map<Date, Long> negativePricePeriods){
+    protected void combineTotalsAndNegatives (List<DailyTotals> dailyTotals, Map<Date, Long> negativePricePeriods){
 
     try{
             
@@ -188,8 +192,9 @@ public class DailyTotalsService implements DailyTotalsServiceInterface{
      * @return List<DailyTotals> return the sorted daily totals
      */
 
-    private List<DailyTotals> retrieveSortedNegativeHours(int page, int size, String sortOrder, List<DailyTotals> dailyTotals) {
+    protected List<DailyTotals> retrieveSortedNegativeHours(int page, int size, String sortOrder, List<DailyTotals> dailyTotals) {
 
+        try{
         // Sort the entire dataset based on negativeHours (ascending or descending)
         List<DailyTotals> sortedByNegativeHours = dailyTotals.stream()
             .sorted((d1, d2) -> {
@@ -205,6 +210,9 @@ public class DailyTotalsService implements DailyTotalsServiceInterface{
         int start = Math.min(page * size, sortedByNegativeHours.size());
         int end = Math.min((page + 1) * size, sortedByNegativeHours.size());
         return sortedByNegativeHours.subList(start, end);
+    }catch(Exception e){
+            throw new RuntimeException("Error sorting neagtive hours");
+        }
     }
 }
 

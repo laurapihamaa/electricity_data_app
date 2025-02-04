@@ -13,7 +13,7 @@ import electricity.data.backend.v1.entities.DailyTotals;
 import electricity.data.backend.v1.interfaces.DailyTotalsServiceInterface;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "*")
 public class DataController {
 
     @Autowired
