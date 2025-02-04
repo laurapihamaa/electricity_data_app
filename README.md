@@ -1,5 +1,3 @@
-# dev-academy-spring-2025-exercise
-
 # Instructions for running the application
 
 The application is runnable with a docker compose file
